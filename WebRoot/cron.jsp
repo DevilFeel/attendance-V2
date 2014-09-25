@@ -128,8 +128,8 @@
 						<li><a class="ajax-link" href="subject.jsp"><i class="icon-home"></i><span class="hidden-tablet"> 创建课程</span></a></li>
 						<li><a class="ajax-link" href="class.jsp"><i class="icon-eye-open"></i><span class="hidden-tablet"> 创建班级</span></a></li>
 						<li><a class="ajax-link" href="cron.jsp"><i class="icon-edit"></i><span class="hidden-tablet"> 创建任务</span></a></li>
+						<li><a class="ajax-link" href="query.jsp"><i class="icon-list-alt"></i><span class="hidden-tablet"> 查看考勤</span></a></li>
 						<li class="nav-header hidden-tablet">未开发</li>
-						<li><a class="ajax-link" href="index.jsp"><i class="icon-list-alt"></i><span class="hidden-tablet"> 功能待定</span></a></li>
 						<li><a class="ajax-link" href="index.jsp"><i class="icon-font"></i><span class="hidden-tablet"> 功能待定</span></a></li>
 						<li><a class="ajax-link" href="index.jsp"><i class="icon-picture"></i><span class="hidden-tablet"> 功能待定</span></a></li>
 						
@@ -148,7 +148,7 @@
 			
 			<div id="content" class="span10">
 			<!-- content starts -->
-       			<form action="">
+       			<form action="createCron" method="post">
        				<label>选择学年：</label><select id="selectYear" name="year"></select>
        				<label>选择学期：</label>
        				<select id="selectSemester" name="semester" onchange="getSubject('selectYear', 'selectSemester', 'selectSubject')">
@@ -160,8 +160,68 @@
        				<select id="selectSubject" name="subject" onchange="getClass('selectSubject','selectClass')"></select>
        				<label>选择班级：</label>
        				<select id="selectClass" name="class"></select>
+       				<div>
+	       				<div id="add">
+	       					上课时间：
+	       					<select name="week" style="WIDTH:90px">
+	       						<option value="1">星期一</option>
+	       						<option value="2">星期二</option>
+	       						<option value="3">星期三</option>
+	       						<option value="4">星期四</option>
+	       						<option value="5">星期五</option>
+	       						<option value="6">星期六</option>
+	       						<option value="7">星期七</option>
+	       					</select>
+	       					单双周：
+	       					<select name="evenAndOld" style="WIDTH:70px">
+	       						<option value="0">全部</option>
+	       						<option value="1">单周</option>
+	       						<option value="2">双周</option>
+	       					</select>
+	       					上课地点：
+	       					<input type="text" name="classroom" style="WIDTH:80px">
+	       					第
+	       					<select name="start" style="WIDTH:50px">
+	       						<option value="1">1</option>
+	       						<option value="2">2</option>
+	       						<option value="3">3</option>
+	       						<option value="4">4</option>
+	       						<option value="5">5</option>
+	       						<option value="6">6</option>
+	       						<option value="7">7</option>
+	       						<option value="8">8</option>
+	       						<option value="9">9</option>
+	       						<option value="10">10</option>
+	       						<option value="11">11</option>
+	       					</select>
+	       					节~第
+	       					<select name="end" style="WIDTH:50px">
+	       						<option value="1">1</option>
+	       						<option value="2">2</option>
+	       						<option value="3">3</option>
+	       						<option value="4">4</option>
+	       						<option value="5">5</option>
+	       						<option value="6">6</option>
+	       						<option value="7">7</option>
+	       						<option value="8">8</option>
+	       						<option value="9">9</option>
+	       						<option value="10">10</option>
+	       						<option value="11">11</option>
+	       					</select>
+	       					节
+	       					<input id="addButton" type="button" value="添加课时" onclick="addLesson(this)">
+	       					<input type="button" value="删除课时" onclick="delLesson(this)">
+	       				</div>
+       				</div>
        				<br>
        				<input type="submit" value="提交">
+       				<br>
+       				<%
+   						String msg = (String)request.getAttribute("msg");
+   						if(msg!=null){
+   							out.print(msg);
+   						}
+   					%>
        			</form>
        			<script type="text/javascript">
 	       			//初始化学期信息
@@ -210,6 +270,15 @@
 			                    }
 			                });
 			            }
+			        }
+			        //添加课时
+			        function addLesson(object){
+			        	$("#add").parent().append($(object).parent().clone());
+			        	//$(object).remove();
+			        }
+			        //删除课时
+			        function delLesson(object){
+			        	$(object).parent().remove();
 			        }
        			</script>
 			<!-- content ends -->

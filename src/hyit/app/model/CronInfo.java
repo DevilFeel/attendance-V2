@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 public class CronInfo {
 	private Integer cronNumber;
-	private Integer sessionNumber;
+	private Integer lessonNumber;
 	private Time executeTime;
 	private Date executeDate;
 	private Timestamp orderTime;
@@ -22,12 +22,12 @@ public class CronInfo {
 		this.cronNumber = cronNumber;
 	}
 
-	public Integer getSessionNumber() {
-		return sessionNumber;
+	public Integer getLessonNumber() {
+		return lessonNumber;
 	}
 
-	public void setSessionNumber(Integer sessionNumber) {
-		this.sessionNumber = sessionNumber;
+	public void setLessonNumber(Integer lessonNumber) {
+		this.lessonNumber = lessonNumber;
 	}
 
 	public Time getExecuteTime() {

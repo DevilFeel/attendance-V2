@@ -127,8 +127,8 @@
 						<li><a class="ajax-link" href="subject.jsp"><i class="icon-home"></i><span class="hidden-tablet"> 创建课程</span></a></li>
 						<li><a class="ajax-link" href="class.jsp"><i class="icon-eye-open"></i><span class="hidden-tablet"> 创建班级</span></a></li>
 						<li><a class="ajax-link" href="cron.jsp"><i class="icon-edit"></i><span class="hidden-tablet"> 创建任务</span></a></li>
+						<li><a class="ajax-link" href="query.jsp"><i class="icon-list-alt"></i><span class="hidden-tablet"> 查看考勤</span></a></li>
 						<li class="nav-header hidden-tablet">未开发</li>
-						<li><a class="ajax-link" href="index.jsp"><i class="icon-list-alt"></i><span class="hidden-tablet"> 功能待定</span></a></li>
 						<li><a class="ajax-link" href="index.jsp"><i class="icon-font"></i><span class="hidden-tablet"> 功能待定</span></a></li>
 						<li><a class="ajax-link" href="index.jsp"><i class="icon-picture"></i><span class="hidden-tablet"> 功能待定</span></a></li>
 						

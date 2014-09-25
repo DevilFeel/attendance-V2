@@ -1,7 +1,9 @@
 package hyit.app.factory;
 
 import hyit.app.dao.IClassInfoDAO;
+import hyit.app.dao.ICronInfoDAO;
 import hyit.app.dao.IDepartmentInfoDAO;
+import hyit.app.dao.ILessonInfoDAO;
 import hyit.app.dao.ISelectionInfoDAO;
 import hyit.app.dao.ISemesterInfoDAO;
 import hyit.app.dao.ISessionInfoDAO;
@@ -9,7 +11,9 @@ import hyit.app.dao.IStudentInfoDAO;
 import hyit.app.dao.ISubjectInfoDAO;
 import hyit.app.dao.ITeacherInfoDAO;
 import hyit.app.dao.proxy.ClassInfoDAOProxy;
+import hyit.app.dao.proxy.CronInfoDAOProxy;
 import hyit.app.dao.proxy.DepartmentInfoDAOProxy;
+import hyit.app.dao.proxy.LessonInfoDAOProxy;
 import hyit.app.dao.proxy.SelectionInfoDAOProxy;
 import hyit.app.dao.proxy.SemesterDAOProxy;
 import hyit.app.dao.proxy.SessionInfoDAOProxy;
@@ -50,5 +54,13 @@ public class DAOFactory {
 	public static ISelectionInfoDAO getISelectionInfoDAOInstance()
 			throws Exception {
 		return new SelectionInfoDAOProxy();
+	}
+
+	public static ILessonInfoDAO getILessonInfoDAOInstance() throws Exception {
+		return new LessonInfoDAOProxy();
+	}
+
+	public static ICronInfoDAO getICronInfoDAOInstance() throws Exception {
+		return new CronInfoDAOProxy();
 	}
 }

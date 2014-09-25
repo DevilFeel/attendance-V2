@@ -16,4 +16,7 @@ public interface ILessonInfoDAO {
 	public List<LessonInfo> getBySessionNumber(Integer number) throws Exception;
 
 	public List<LessonInfo> getAll() throws Exception;
+
+	public LessonInfo getByOther(Integer sessionNumber, Integer week,
+			Integer start) throws Exception;
 }
