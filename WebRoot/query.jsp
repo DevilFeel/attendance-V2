@@ -18,6 +18,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
 	<meta name="author" content="Muhammad Usman">
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
 
 	<!-- The styles -->
 	<link id="bs-css" href="css/bootstrap-cerulean.css" rel="stylesheet">
@@ -147,7 +148,9 @@
 			
 			<div id="content" class="span10">
 			<!-- content starts -->
-       
+       			<form action="">
+       				
+       			</form>
 			<!-- content ends -->
 			</div><!--/#content.span10-->
 				</div><!--/fluid-row-->

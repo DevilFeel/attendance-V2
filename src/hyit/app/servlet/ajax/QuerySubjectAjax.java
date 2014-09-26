@@ -69,7 +69,7 @@ public class QuerySubjectAjax extends HttpServlet {
 			}
 			if (semesterInfo != null) {
 				listSub = DAOFactory.getISubjectInfoDAOInstance()
-						.getByTeacherNumber(teacherNumber,
+						.getByTeacherNumberAndSemesterNumber(teacherNumber,
 								semesterInfo.getSemesterNumber());
 				iterSub = listSub.iterator();
 				while (iterSub.hasNext()) {

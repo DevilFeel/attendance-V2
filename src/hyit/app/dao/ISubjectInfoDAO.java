@@ -13,10 +13,14 @@ public interface ISubjectInfoDAO {
 
 	public SubjectInfo getByID(Integer number) throws Exception;
 
-	public SubjectInfo getByName(String name, Integer teacherNumber,Integer semesterNumber) throws Exception;
+	public SubjectInfo getByName(String name, Integer teacherNumber,
+			Integer semesterNumber) throws Exception;
 
-	public List<SubjectInfo> getByTeacherNumber(Integer teacherNumber, Integer semesterNumber)
+	public List<SubjectInfo> getByTeacherNumber(Integer teacherNumber)
 			throws Exception;
+
+	public List<SubjectInfo> getByTeacherNumberAndSemesterNumber(
+			Integer teacherNumber, Integer semesterNumber) throws Exception;
 
 	public List<SubjectInfo> getBySemesterNumber(Integer number)
 			throws Exception;

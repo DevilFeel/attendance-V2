@@ -79,12 +79,13 @@ public class SubjectInfoProxy implements ISubjectInfoDAO {
 	}
 
 	@Override
-	public List<SubjectInfo> getByTeacherNumber(Integer teacherNumber,
-			Integer semesterNumber) throws Exception {
+	public List<SubjectInfo> getByTeacherNumberAndSemesterNumber(
+			Integer teacherNumber, Integer semesterNumber) throws Exception {
 		// TODO Auto-generated method stub
 		List<SubjectInfo> all = null;
 		try {
-			all = this.dao.getByTeacherNumber(teacherNumber, semesterNumber);
+			all = this.dao.getByTeacherNumberAndSemesterNumber(teacherNumber,
+					semesterNumber);
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw e;
@@ -105,6 +106,22 @@ public class SubjectInfoProxy implements ISubjectInfoDAO {
 	public List<SubjectInfo> getAll() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<SubjectInfo> getByTeacherNumber(Integer teacherNumber)
+			throws Exception {
+		// TODO Auto-generated method stub
+		List<SubjectInfo> all = null;
+		try {
+			all = this.dao.getByTeacherNumber(teacherNumber);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw e;
+		} finally {
+			this.dbc.close();
+		}
+		return all;
 	}
 
 }

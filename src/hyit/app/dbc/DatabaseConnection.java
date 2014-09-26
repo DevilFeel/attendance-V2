@@ -26,10 +26,12 @@ public class DatabaseConnection {
 
 	public DatabaseConnection() throws Exception {
 		try {
-			/*Class.forName(DBDRIVER);
-			this.conn = DriverManager.getConnection(DBURL, DBUSER, DBPASSWORD);*/
-			Context ctx = new InitialContext();	//使用tomcat数据源
-			DataSource ds = (DataSource)ctx.lookup(DSNAME);
+			/*
+			 * Class.forName(DBDRIVER); this.conn =
+			 * DriverManager.getConnection(DBURL, DBUSER, DBPASSWORD);
+			 */
+			Context ctx = new InitialContext(); // 使用tomcat数据源
+			DataSource ds = (DataSource) ctx.lookup(DSNAME);
 			this.conn = ds.getConnection();
 		} catch (Exception e) {
 			throw e;

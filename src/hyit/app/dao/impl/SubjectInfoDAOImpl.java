@@ -66,7 +66,7 @@ public class SubjectInfoDAOImpl implements ISubjectInfoDAO {
 	}
 
 	@Override
-	public List<SubjectInfo> getByTeacherNumber(Integer teacherNumber,
+	public List<SubjectInfo> getByTeacherNumberAndSemesterNumber(Integer teacherNumber,
 			Integer semesterNumber) throws Exception {
 		// TODO Auto-generated method stub
 		List<SubjectInfo> all = new ArrayList<SubjectInfo>();
@@ -123,5 +123,28 @@ public class SubjectInfoDAOImpl implements ISubjectInfoDAO {
 		}
 		this.pstmt.close();
 		return info;
+	}
+
+	@Override
+	public List<SubjectInfo> getByTeacherNumber(Integer teacherNumber)
+			throws Exception {
+		// TODO Auto-generated method stub
+		List<SubjectInfo> all = new ArrayList<SubjectInfo>();
+		SubjectInfo info = null;
+		String sql = "SELECT subject_number,`name`,semester_number,teacher_number FROM subject_info "
+				+ "WHERE teacher_number = ?";
+		this.pstmt = this.conn.prepareStatement(sql);
+		this.pstmt.setInt(1, teacherNumber);
+		ResultSet rs = this.pstmt.executeQuery();
+		while (rs.next()) {
+			info = new SubjectInfo();
+			info.setSubjectNumber(rs.getInt(1));
+			info.setName(rs.getString(2));
+			info.setSemesterNumber(rs.getInt(3));
+			info.setTeacherNumber(rs.getInt(4));
+			all.add(info);
+		}
+		this.pstmt.close();
+		return all;
 	}
 }

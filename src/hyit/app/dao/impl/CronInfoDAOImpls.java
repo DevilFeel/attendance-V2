@@ -2,6 +2,8 @@ package hyit.app.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import hyit.app.dao.ICronInfoDAO;
@@ -53,7 +55,27 @@ public class CronInfoDAOImpls implements ICronInfoDAO {
 	@Override
 	public List<CronInfo> getByLessonNumber(Integer number) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		List<CronInfo> all = new ArrayList<CronInfo>();
+		CronInfo info = null;
+		String sql = "SELECT cron_number,lesson_number,execute_time,execute_date,`week`,classroom,"
+				+ "order_time,`status` FROM cron_info WHERE lesson_number = ?";
+		this.pstmt = this.conn.prepareStatement(sql);
+		this.pstmt.setInt(1, number);
+		ResultSet rs = this.pstmt.executeQuery();
+		while (rs.next()) {
+			info = new CronInfo();
+			info.setCronNumber(rs.getInt(1));
+			info.setLessonNumber(rs.getInt(2));
+			info.setExecuteTime(rs.getTime(3));
+			info.setExecuteDate(rs.getDate(4));
+			info.setWeek(rs.getInt(5));
+			info.setClassroom(rs.getString(6));
+			info.setOrderTime(rs.getTimestamp(7));
+			info.setStatus(rs.getInt(8));
+			all.add(info);
+		}
+		this.pstmt.close();
+		return all;
 	}
 
 	@Override
