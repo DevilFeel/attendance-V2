@@ -7,7 +7,6 @@ import hyit.app.model.StudentInfo;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -59,7 +58,6 @@ public class UploadServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");
-
 		String year = null;
 		String name = null;
 		boolean flag = true; // 设置标识
@@ -150,13 +148,12 @@ public class UploadServlet extends HttpServlet {
 			}
 		}
 		// 导入信息完成
-		PrintWriter pw = response.getWriter();
-		response.setCharacterEncoding("utf-8");
 		if (flag) {
-			pw.print("上传成功");
+			request.setAttribute("msg", "上传成功！");
 		} else {
-			pw.print("上传失败");
+			request.setAttribute("msg", "上传失败！");
 		}
+		request.getRequestDispatcher("import.jsp").forward(request, response);
 	}
 
 	/**

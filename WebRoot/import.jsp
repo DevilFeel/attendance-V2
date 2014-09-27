@@ -148,9 +148,19 @@
 			<div id="content" class="span10">
 			<!-- content starts -->
 				<form action="upload" method="post" enctype="multipart/form-data">
+					<label>选择上传名单：</label>
 					<input type="file" name="fileupload">
+					<label>输入入学时间：</label>
 					<input type="text" name="year">
-					<input type="submit" value="上传">				
+					<br>
+					<input type="submit" value="上传">
+					<br>
+					<%
+   						String msg = (String)request.getAttribute("msg");
+   						if(msg!=null){
+   							out.print(msg);
+   						}
+   					%>				
 				</form>
 			<!-- content ends -->
 			</div><!--/#content.span10-->

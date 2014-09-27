@@ -11,6 +11,7 @@ import hyit.app.model.TeacherInfo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,10 +49,13 @@ public class QueryCronClient extends HttpServlet {
 		response.setContentType("text/xml");
 		Integer sessionNumber = Integer.parseInt(request
 				.getParameter("sessionNumber"));
-		Integer teacherNumber = Integer.parseInt(request.getParameter("teacherNumber"));
-		/*String account = request.getParameter("account");
-		String password = request.getParameter("password");
-		String cardMac = request.getParameter("cardMac");*/
+		Integer teacherNumber = Integer.parseInt(request
+				.getParameter("teacherNumber"));
+		/*
+		 * String account = request.getParameter("account"); String password =
+		 * request.getParameter("password"); String cardMac =
+		 * request.getParameter("cardMac");
+		 */
 		boolean flag = true;
 		TeacherInfo teacherInfo = new TeacherInfo();
 		List<LessonInfo> lessonList = null;
@@ -66,14 +70,14 @@ public class QueryCronClient extends HttpServlet {
 		StudentInfo studentInfo = null;
 		ScheduleInfo scheduleStart = null;
 		ScheduleInfo scheduleEnd = null;
-		/*if (null == cardMac) {
-			teacherInfo.setAccount(account);
-			teacherInfo.setPassword(password);
-		} else {
-			teacherInfo.setCardMac(cardMac);
-		}*/
+		/*
+		 * if (null == cardMac) { teacherInfo.setAccount(account);
+		 * teacherInfo.setPassword(password); } else {
+		 * teacherInfo.setCardMac(cardMac); }
+		 */
 		try {
-			teacherInfo = DAOFactory.getITeacherInfoDAOInstance().getByID(teacherNumber);
+			teacherInfo = DAOFactory.getITeacherInfoDAOInstance().getByID(
+					teacherNumber);
 		} catch (Exception e) {
 			// TODO: handle exception
 			flag = false;
@@ -112,7 +116,7 @@ public class QueryCronClient extends HttpServlet {
 			// 选定当天该课时的考勤任务
 			while (cronIter.hasNext()) {
 				cronInfo = cronIter.next();
-				if (Date.valueOf(cronInfo.getExecuteDate().toString()).equals(	//对比时间是否相同
+				if (Date.valueOf(cronInfo.getExecuteDate().toString()).equals( // 对比时间是否相同
 						Date.valueOf(date.toString()))) {
 					break;
 				} else {
@@ -141,8 +145,11 @@ public class QueryCronClient extends HttpServlet {
 		} catch (Exception e) {
 			// TODO: handle exception
 			flag = false;
+			e.printStackTrace();
 			System.out.println("获取上课时间失败！");
 		}
+		// 获取服务器当前的时间Time
+		Time time = new Time(System.currentTimeMillis());
 		// 以XML结构输出考勤任务
 		if (flag) {
 			selectionIter = selectionList.iterator();
@@ -161,6 +168,7 @@ public class QueryCronClient extends HttpServlet {
 			pw.println("<cron>");
 			pw.println("<cronNumber>" + cronInfo.getCronNumber()
 					+ "</cronNumber>");
+			pw.println("<executeTime>" + time + "</executeTime>");
 			pw.println("<executeDate>" + cronInfo.getExecuteDate()
 					+ "</executeDate>");
 			pw.println("<orderDate>" + cronInfo.getOrderTime() + "</orderDate>");
