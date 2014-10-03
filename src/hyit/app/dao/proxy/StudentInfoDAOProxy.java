@@ -37,7 +37,16 @@ public class StudentInfoDAOProxy implements IStudentInfoDAO {
 	@Override
 	public boolean update(StudentInfo info) throws Exception {
 		// TODO Auto-generated method stub
-		return false;
+		boolean flag = false;
+		try {
+			flag = this.dao.update(info);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw e;
+		} finally {
+			this.dbc.close();
+		}
+		return flag;
 	}
 
 	@Override

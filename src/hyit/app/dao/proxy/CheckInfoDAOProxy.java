@@ -2,23 +2,23 @@ package hyit.app.dao.proxy;
 
 import java.util.List;
 
-import hyit.app.dao.ICronInfoDAO;
-import hyit.app.dao.impl.CronInfoDAOImpls;
+import hyit.app.dao.ICheckInfoDAO;
+import hyit.app.dao.impl.CheckInfoDAOImpl;
 import hyit.app.dbc.DatabaseConnection;
-import hyit.app.model.CronInfo;
+import hyit.app.model.CheckInfo;
 
-public class CronInfoDAOProxy implements ICronInfoDAO {
+public class CheckInfoDAOProxy implements ICheckInfoDAO {
 	private DatabaseConnection dbc = null;
-	private ICronInfoDAO dao = null;
+	private ICheckInfoDAO dao = null;
 
-	public CronInfoDAOProxy() throws Exception {
+	public CheckInfoDAOProxy() throws Exception {
 		// TODO Auto-generated constructor stub
 		this.dbc = new DatabaseConnection();
-		this.dao = new CronInfoDAOImpls(this.dbc.getConnection());
+		this.dao = new CheckInfoDAOImpl(this.dbc.getConnection());
 	}
 
 	@Override
-	public boolean doCreate(CronInfo info) throws Exception {
+	public boolean doCreate(CheckInfo info) throws Exception {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		try {
@@ -33,38 +33,29 @@ public class CronInfoDAOProxy implements ICronInfoDAO {
 	}
 
 	@Override
-	public boolean update(CronInfo info) throws Exception {
+	public boolean update(CheckInfo info) throws Exception {
 		// TODO Auto-generated method stub
-		boolean flag = false;
-		try {
-			flag = this.dao.update(info);
-		} catch (Exception e) {
-			// TODO: handle exception
-			throw e;
-		} finally {
-			this.dbc.close();
-		}
-		return flag;
+		return false;
 	}
 
 	@Override
-	public CronInfo delete(Integer number) throws Exception {
+	public CheckInfo delete(Integer number) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public CronInfo getByID(Integer number) throws Exception {
+	public CheckInfo getByID(Integer number) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CronInfo> getByLessonNumber(Integer number) throws Exception {
+	public List<CheckInfo> getByCronNumber(Integer number) throws Exception {
 		// TODO Auto-generated method stub
-		List<CronInfo> all = null;
+		List<CheckInfo> all = null;
 		try {
-			all = this.dao.getByLessonNumber(number);
+			all = this.dao.getByCronNumber(number);
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw e;
@@ -75,7 +66,7 @@ public class CronInfoDAOProxy implements ICronInfoDAO {
 	}
 
 	@Override
-	public List<CronInfo> getAll() throws Exception {
+	public List<CheckInfo> getAll() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

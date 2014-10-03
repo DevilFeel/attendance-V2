@@ -43,7 +43,16 @@ public class StudentInfoDAOImpl implements IStudentInfoDAO {
 	@Override
 	public boolean update(StudentInfo info) throws Exception {
 		// TODO Auto-generated method stub
-		return false;
+		boolean flag = false;
+		String sql = "UPDATE student_info SET card_mac = ? WHERE student_number = ?";
+		this.pstmt = this.conn.prepareStatement(sql);
+		this.pstmt.setString(1, info.getCardMac());
+		this.pstmt.setLong(2, info.getStudentNumber());
+		if (this.pstmt.executeUpdate() > 0) {
+			flag = true;
+		}
+		this.pstmt.close();
+		return flag;
 	}
 
 	@Override

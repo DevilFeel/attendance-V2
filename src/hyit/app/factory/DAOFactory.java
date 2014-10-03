@@ -1,5 +1,6 @@
 package hyit.app.factory;
 
+import hyit.app.dao.ICheckInfoDAO;
 import hyit.app.dao.IClassInfoDAO;
 import hyit.app.dao.ICronInfoDAO;
 import hyit.app.dao.IDepartmentInfoDAO;
@@ -11,6 +12,7 @@ import hyit.app.dao.ISessionInfoDAO;
 import hyit.app.dao.IStudentInfoDAO;
 import hyit.app.dao.ISubjectInfoDAO;
 import hyit.app.dao.ITeacherInfoDAO;
+import hyit.app.dao.proxy.CheckInfoDAOProxy;
 import hyit.app.dao.proxy.ClassInfoDAOProxy;
 import hyit.app.dao.proxy.CronInfoDAOProxy;
 import hyit.app.dao.proxy.DepartmentInfoDAOProxy;
@@ -69,5 +71,9 @@ public class DAOFactory {
 	public static IScheduleInfoDAO getIScheduleInfoDAOInstance()
 			throws Exception {
 		return new ScheduleInfoDAOProxy();
+	}
+
+	public static ICheckInfoDAO getICheckInfoDAOInstance() throws Exception {
+		return new CheckInfoDAOProxy();
 	}
 }

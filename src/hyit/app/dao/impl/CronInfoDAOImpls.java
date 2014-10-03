@@ -37,7 +37,17 @@ public class CronInfoDAOImpls implements ICronInfoDAO {
 	@Override
 	public boolean update(CronInfo info) throws Exception {
 		// TODO Auto-generated method stub
-		return false;
+		boolean flag = false;
+		String sql = "UPDATE cron_info SET execute_time = ?, `status` = ? WHERE cron_number = ?";
+		this.pstmt = this.conn.prepareStatement(sql);
+		this.pstmt.setTime(1, info.getExecuteTime());
+		this.pstmt.setInt(2, info.getStatus());
+		this.pstmt.setInt(3, info.getCronNumber());
+		if (this.pstmt.executeUpdate() > 0) {
+			flag = true;
+		}
+		this.pstmt.close();
+		return flag;
 	}
 
 	@Override
