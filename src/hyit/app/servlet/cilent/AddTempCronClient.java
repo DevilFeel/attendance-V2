@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,16 +23,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class QueryCronClient
+ * Servlet implementation class AddTempCronClient
  */
-@WebServlet("/queryCronClient")
-public class QueryCronClient extends HttpServlet {
+@WebServlet("/addTempCron")
+public class AddTempCronClient extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public QueryCronClient() {
+	public AddTempCronClient() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -45,36 +46,25 @@ public class QueryCronClient extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
-		response.setContentType("text/xml");
-		Integer sessionNumber = Integer.parseInt(request
-				.getParameter("sessionNumber"));
 		Integer teacherNumber = Integer.parseInt(request
 				.getParameter("teacherNumber"));
-		/*
-		 * String account = request.getParameter("account"); String password =
-		 * request.getParameter("password"); String cardMac =
-		 * request.getParameter("cardMac");
-		 */
-		boolean flag = true;
-		TeacherInfo teacherInfo = new TeacherInfo();
-		List<LessonInfo> lessonList = null;
-		Iterator<LessonInfo> lessonIter = null;
-		LessonInfo lessonInfo = null;
+		Integer sessionNumber = Integer.parseInt(request
+				.getParameter("sessionNumber"));
+		Integer startTime = Integer.parseInt(request.getParameter("startTime"));
+		Integer endTime = Integer.parseInt(request.getParameter("endTime"));
+		String classroom = request.getParameter("classroom");
 		List<CronInfo> cronList = null;
 		Iterator<CronInfo> cronIter = null;
-		CronInfo cronInfo = null;
 		List<SelectionInfo> selectionList = null;
 		Iterator<SelectionInfo> selectionIter = null;
+		boolean flag = true;
+		TeacherInfo teacherInfo = null;
+		LessonInfo lessonInfo = null;
 		SelectionInfo selectionInfo = null;
 		StudentInfo studentInfo = null;
+		CronInfo cronInfo = null;
 		ScheduleInfo scheduleStart = null;
 		ScheduleInfo scheduleEnd = null;
-		/*
-		 * if (null == cardMac) { teacherInfo.setAccount(account);
-		 * teacherInfo.setPassword(password); } else {
-		 * teacherInfo.setCardMac(cardMac); }
-		 */
 		try {
 			teacherInfo = DAOFactory.getITeacherInfoDAOInstance().getByID(
 					teacherNumber);
@@ -83,48 +73,46 @@ public class QueryCronClient extends HttpServlet {
 			flag = false;
 			System.out.println("账号验证失败！");
 		}
+		Date date = new Date(System.currentTimeMillis());
+		// 添加临时课时
+		lessonInfo = new LessonInfo();
+		lessonInfo.setSessionNumber(sessionNumber);
+		lessonInfo.setDayOfWeek(date.getDay());
+		lessonInfo.setStartLesson(startTime);
+		lessonInfo.setEndLesson(endTime);
+		lessonInfo.setClassroom(classroom);
 		try {
-			lessonList = DAOFactory.getILessonInfoDAOInstance()
-					.getBySessionNumber(sessionNumber);
+			DAOFactory.getILessonInfoDAOInstance().doCreate(lessonInfo);
+			lessonInfo = DAOFactory.getILessonInfoDAOInstance().getByOther(
+					lessonInfo.getSessionNumber(), lessonInfo.getDayOfWeek(),
+					lessonInfo.getStartLesson());
 		} catch (Exception e) {
 			// TODO: handle exception
 			flag = false;
-			System.out.println("获取课时列表失败！");
+			System.out.println("创建课时失败！");
 		}
-		Date date = new Date(System.currentTimeMillis()); // 获取当前系统时间
-		Integer week = new Integer(date.getDay());
-		lessonIter = lessonList.iterator();
-		// 选定当天的课时
-		while (lessonIter.hasNext()) {
-			lessonInfo = lessonIter.next();
-			if (lessonInfo.getDayOfWeek().intValue() == week.intValue()) {
+		// 添加临时任务
+		cronInfo = new CronInfo();
+		cronInfo.setLessonNumber(lessonInfo.getLessonNumber());
+		cronInfo.setExecuteDate(date);
+		cronInfo.setOrderTime(new Timestamp(System.currentTimeMillis()));
+		try {
+			DAOFactory.getICronInfoDAOInstance().doCreate(cronInfo);
+			cronList = DAOFactory.getICronInfoDAOInstance().getByLessonNumber(
+					lessonInfo.getLessonNumber());
+		} catch (Exception e) {
+			// TODO: handle exception
+			flag = false;
+			System.out.println("添加临时任务失败！");
+		}
+		cronIter = cronList.iterator();
+		while (cronIter.hasNext()) { // 筛选任务
+			cronInfo = cronIter.next();
+			if (Date.valueOf(cronInfo.getExecuteDate().toString()).equals( // 对比时间是否相同
+					Date.valueOf(date.toString()))) {
 				break;
 			} else {
-				lessonInfo = null;
-			}
-		}
-		if (null != lessonInfo) {
-			try {
-				cronList = DAOFactory.getICronInfoDAOInstance()
-						.getByLessonNumber(lessonInfo.getLessonNumber());
-			} catch (Exception e) {
-				// TODO: handle exception
-				flag = false;
-				System.out.println("获取考勤任务列表失败！");
-			}
-			cronIter = cronList.iterator();
-			// 选定当天该课时的考勤任务
-			while (cronIter.hasNext()) {
-				cronInfo = cronIter.next();
-				if (Date.valueOf(cronInfo.getExecuteDate().toString()).equals( // 对比时间是否相同
-						Date.valueOf(date.toString()))) {
-					break;
-				} else {
-					cronInfo = null;
-				}
-			}
-			if (null == cronInfo) {
-				flag = false;
+				cronInfo = null;
 			}
 		}
 		// 获取班级名单

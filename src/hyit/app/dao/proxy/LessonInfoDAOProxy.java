@@ -22,7 +22,9 @@ public class LessonInfoDAOProxy implements ILessonInfoDAO {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		try {
-			flag = this.dao.doCreate(info);
+			if(this.dao.getByOther(info.getSessionNumber(), info.getDayOfWeek(), info.getStartLesson())==null){
+				flag = this.dao.doCreate(info);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw e;
