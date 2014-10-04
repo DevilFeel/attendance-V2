@@ -46,6 +46,8 @@ public class AddTempCronClient extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/xml");
 		Integer teacherNumber = Integer.parseInt(request
 				.getParameter("teacherNumber"));
 		Integer sessionNumber = Integer.parseInt(request
@@ -78,6 +80,7 @@ public class AddTempCronClient extends HttpServlet {
 		lessonInfo = new LessonInfo();
 		lessonInfo.setSessionNumber(sessionNumber);
 		lessonInfo.setDayOfWeek(date.getDay());
+		lessonInfo.setEvenOld(3);
 		lessonInfo.setStartLesson(startTime);
 		lessonInfo.setEndLesson(endTime);
 		lessonInfo.setClassroom(classroom);
