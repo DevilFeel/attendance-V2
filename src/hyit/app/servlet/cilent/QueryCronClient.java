@@ -97,7 +97,7 @@ public class QueryCronClient extends HttpServlet {
 		// 选定当天的课时
 		while (lessonIter.hasNext()) {
 			lessonInfo = lessonIter.next();
-			if (lessonInfo.getDayOfWeek().intValue() == week.intValue()) {
+			if (lessonInfo.getDayOfWeek().intValue()%7 == week.intValue()) {	//由于week星期天表示0，这里取余7
 				break;
 			} else {
 				lessonInfo = null;
@@ -144,6 +144,7 @@ public class QueryCronClient extends HttpServlet {
 					lessonInfo.getEndLesson());
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			flag = false;
 			System.out.println("获取上课时间失败！");
 		}
