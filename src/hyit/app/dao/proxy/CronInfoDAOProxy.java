@@ -56,7 +56,16 @@ public class CronInfoDAOProxy implements ICronInfoDAO {
 	@Override
 	public CronInfo getByID(Integer number) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		CronInfo info = null;
+		try {
+			info = this.dao.getByID(number);
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw e;
+		} finally {
+			this.dbc.close();
+		}
+		return info;
 	}
 
 	@Override

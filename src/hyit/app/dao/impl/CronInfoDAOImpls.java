@@ -59,7 +59,25 @@ public class CronInfoDAOImpls implements ICronInfoDAO {
 	@Override
 	public CronInfo getByID(Integer number) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		CronInfo info = null;
+		String sql = "SELECT cron_number,lesson_number,execute_time,execute_date,`week`,classroom,"
+				+ "order_time,`status` FROM cron_info WHERE cron_number = ?";
+		this.pstmt = this.conn.prepareStatement(sql);
+		this.pstmt.setInt(1, number);
+		ResultSet rs = this.pstmt.executeQuery();
+		while (rs.next()) {
+			info = new CronInfo();
+			info.setCronNumber(rs.getInt(1));
+			info.setLessonNumber(rs.getInt(2));
+			info.setExecuteTime(rs.getTime(3));
+			info.setExecuteDate(rs.getDate(4));
+			info.setWeek(rs.getInt(5));
+			info.setClassroom(rs.getString(6));
+			info.setOrderTime(rs.getTimestamp(7));
+			info.setStatus(rs.getInt(8));
+		}
+		this.pstmt.close();
+		return info;
 	}
 
 	@Override

@@ -98,24 +98,24 @@ public class PostCheckDataClient extends HttpServlet {
 				}
 			}
 			// 更新考勤任务状态
-			cronInfo = new CronInfo();
 			try {
 				cronInfo = DAOFactory.getICronInfoDAOInstance().getByID(
 						cronNumber);
 				cronInfo.setExecuteTime(executeTime);
 				cronInfo.setStatus(1);
-				DAOFactory.getICheckInfoDAOInstance().update(checkInfo);
+				flag = DAOFactory.getICronInfoDAOInstance().update(cronInfo);
 			} catch (Exception e) {
 				// TODO: handle exception
 				flag = false;
 				System.out.println("更新考勤任务状态失败！");
+				e.printStackTrace();
 			}
 		} else {
 			flag = false;
 		}
 		if (flag) {
 			PrintWriter pw = response.getWriter();
-			pw.print("execute succeed！");
+			pw.print("succeed");
 			pw.close();
 		}
 	}
